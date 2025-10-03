@@ -1,0 +1,55 @@
+from datetime import datetime
+
+estoque = []
+
+def registrar_item():
+    print("\n== Cadastro de Estoque ==")
+    item = input("Item: ").strip()
+    
+    quantidade_input = input("Quantidade: ").strip()
+    try:
+        quantidade = int(quantidade_input)
+    except ValueError:
+        print("Quantidade inválida. Digite um número inteiro.")
+        return
+
+    validade_input = input("Validade (dd/mm/aaaa): ").strip()
+    try:
+        validade = datetime.strptime(validade_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data de validade inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    fornecedor = input("Fornecedor: ").strip()
+
+    item_estoque = {
+        "item": item,
+        "quantidade": quantidade,
+        "validade": validade,
+        "fornecedor": fornecedor
+    }
+
+    estoque.append(item_estoque)
+    print("Item registrado no estoque com sucesso!")
+
+def listar_estoque():
+    if not estoque:
+        print("Nenhum item registrado no estoque.")
+        return
+    print("\n== Estoque Registrado ==")
+    for i, e in enumerate(estoque, 1):
+        print(f"{i}. Item: {e['item']} - Quantidade: {e['quantidade']} - Validade: {e['validade']} - Fornecedor: {e['fornecedor']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar item")
+        print("2 - Listar estoque")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_item()
+        elif opcao == "2":
+            listar_estoque()
+        else:
+            print("Opção inválida.")
+
+menu()
