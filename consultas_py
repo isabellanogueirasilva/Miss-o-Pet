@@ -1,0 +1,53 @@
+from datetime import datetime
+
+consultas = []
+
+def registrar_consulta():
+    print("\n== Registro de Consulta ==")
+    id_animal = input("ID do animal: ").strip()
+    nome_animal = input("Nome do animal: ").strip()
+    id_medico = input("ID do médico: ").strip()
+    nome_medico = input("Nome do médico: ").strip()
+    data_input = input("Data (dd/mm/aaaa): ").strip()
+    
+    try:
+        data = datetime.strptime(data_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    observacao = input("Observação: ").strip()
+
+    consulta = {
+        "id_animal": id_animal,
+        "nome_animal": nome_animal,
+        "id_medico": id_medico,
+        "nome_medico": nome_medico,
+        "data": data,
+        "observacao": observacao
+    }
+
+    consultas.append(consulta)
+    print("Consulta registrada com sucesso!")
+
+def listar_consultas():
+    if not consultas:
+        print("Nenhuma consulta registrada.")
+        return
+    print("\n== Consultas Registradas ==")
+    for i, c in enumerate(consultas, 1):
+        print(f"{i}. Animal ID: {c['id_animal']} - Nome: {c['nome_animal']} - Médico ID: {c['id_medico']} - Nome: {c['nome_medico']} - Data: {c['data']} - Observação: {c['observacao']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar consulta")
+        print("2 - Listar consultas")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_consulta()
+        elif opcao == "2":
+            listar_consultas()
+        else:
+            print("Opção inválida.")
+
+menu()
