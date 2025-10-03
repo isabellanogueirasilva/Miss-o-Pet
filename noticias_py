@@ -1,0 +1,48 @@
+from datetime import datetime
+
+noticias = []
+
+def registrar_noticia():
+    print("\n== Registrar Notícia ==")
+    titulo = input("Título: ").strip()
+    conteudo = input("Conteúdo: ").strip()
+    imagem = input("Imagem (link ou descrição): ").strip()
+    
+    data_input = input("Data (dd/mm/aaaa): ").strip()
+    try:
+        data = datetime.strptime(data_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    noticia = {
+        "titulo": titulo,
+        "conteudo": conteudo,
+        "imagem": imagem,
+        "data": data
+    }
+
+    noticias.append(noticia)
+    print("Notícia registrada com sucesso!")
+
+def listar_noticias():
+    if not noticias:
+        print("Nenhuma notícia registrada.")
+        return
+    print("\n== Notícias Registradas ==")
+    for i, n in enumerate(noticias, 1):
+        print(f"{i}. Título: {n['titulo']} - Conteúdo: {n['conteudo']} - Imagem: {n['imagem']} - Data: {n['data']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar notícia")
+        print("2 - Listar notícias")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_noticia()
+        elif opcao == "2":
+            listar_noticias()
+        else:
+            print("Opção inválida.")
+
+menu()
