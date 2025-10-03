@@ -1,0 +1,54 @@
+from datetime import datetime
+
+resgates = []
+
+def registrar_resgate():
+    print("\n== Histórico de Resgate ==")
+    id_animal = input("ID do animal: ").strip()
+    nome_animal = input("Nome do animal: ").strip()
+    local_resgate = input("Local de resgate: ").strip()
+    
+    data_input = input("Data (dd/mm/aaaa): ").strip()
+    try:
+        data = datetime.strptime(data_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    status = input("Status (em tratamento/pronto para adoção): ").strip().lower()
+    if status not in ("em tratamento", "pronto para adoção"):
+        print("Status inválido. Digite 'em tratamento' ou 'pronto para adoção'.")
+        return
+
+    resgate = {
+        "id_animal": id_animal,
+        "nome_animal": nome_animal,
+        "local_resgate": local_resgate,
+        "data": data,
+        "status": status
+    }
+
+    resgates.append(resgate)
+    print("Resgate registrado com sucesso!")
+
+def listar_resgates():
+    if not resgates:
+        print("Nenhum resgate registrado.")
+        return
+    print("\n== Histórico de Resgates ==")
+    for i, r in enumerate(resgates, 1):
+        print(f"{i}. ID: {r['id_animal']} - Nome: {r['nome_animal']} - Local: {r['local_resgate']} - Data: {r['data']} - Status: {r['status']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar resgate")
+        print("2 - Listar resgates")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_resgate()
+        elif opcao == "2":
+            listar_resgates()
+        else:
+            print("Opção inválida.")
+
+menu()
