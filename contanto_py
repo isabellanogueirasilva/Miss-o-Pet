@@ -1,0 +1,58 @@
+from datetime import datetime
+
+contatos = []
+
+def registrar_contato():
+    print("\n== Contato ==")
+    nome = input("Nome: ").strip()
+    email = input("Email: ").strip().lower()
+    telefone = input("Telefone (apenas números, incluindo DDD): ").strip()
+    mensagem = input("Mensagem: ").strip()
+
+    if "@" not in email or email.split("@")[1] not in ("gmail.com", "hotmail.com", "outlook.com", "yahoo.com"):
+        print("Email inválido. Aceitamos apenas gmail, hotmail, outlook ou yahoo.")
+        return
+
+    if not telefone.isdigit() or len(telefone) < 10:
+        print("Telefone inválido. Deve conter apenas números e incluir DDD.")
+        return
+
+    data_input = input("Data (dd/mm/aaaa): ").strip()
+    try:
+        data = datetime.strptime(data_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    contato = {
+        "nome": nome,
+        "email": email,
+        "telefone": telefone,
+        "mensagem": mensagem,
+        "data": data
+    }
+
+    contatos.append(contato)
+    print("Contato registrado com sucesso!")
+
+def listar_contatos():
+    if not contatos:
+        print("Nenhum contato registrado.")
+        return
+    print("\n== Contatos Registrados ==")
+    for i, c in enumerate(contatos, 1):
+        print(f"{i}. {c['nome']} - {c['email']} - {c['telefone']} - {c['mensagem']} - {c['data']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar contato")
+        print("2 - Listar contatos")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_contato()
+        elif opcao == "2":
+            listar_contatos()
+        else:
+            print("Opção inválida.")
+
+menu()
