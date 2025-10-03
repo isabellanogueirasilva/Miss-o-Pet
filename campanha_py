@@ -1,0 +1,54 @@
+from datetime import datetime
+
+campanhas = []
+
+def registrar_campanha():
+    print("\n== Registrar Campanha ==")
+    nome = input("Nome da campanha: ").strip()
+    descricao = input("Descrição: ").strip()
+    objetivo = input("Objetivo: ").strip()
+    arrecadacao = input("Arrecadação (valor ou descrição): ").strip()
+
+    data_inicio_input = input("Data de início (dd/mm/aaaa): ").strip()
+    data_fim_input = input("Data de fim (dd/mm/aaaa): ").strip()
+
+    try:
+        data_inicio = datetime.strptime(data_inicio_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+        data_fim = datetime.strptime(data_fim_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    campanha = {
+        "nome": nome,
+        "descricao": descricao,
+        "objetivo": objetivo,
+        "arrecadacao": arrecadacao,
+        "data_inicio": data_inicio,
+        "data_fim": data_fim
+    }
+
+    campanhas.append(campanha)
+    print("Campanha registrada com sucesso!")
+
+def listar_campanhas():
+    if not campanhas:
+        print("Nenhuma campanha registrada.")
+        return
+    print("\n== Campanhas Registradas ==")
+    for i, c in enumerate(campanhas, 1):
+        print(f"{i}. Nome: {c['nome']} - Descrição: {c['descricao']} - Objetivo: {c['objetivo']} - Arrecadação: {c['arrecadacao']} - Início: {c['data_inicio']} - Fim: {c['data_fim']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar campanha")
+        print("2 - Listar campanhas")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_campanha()
+        elif opcao == "2":
+            listar_campanhas()
+        else:
+            print("Opção inválida.")
+
+menu()
