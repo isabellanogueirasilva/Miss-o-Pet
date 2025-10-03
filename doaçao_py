@@ -1,0 +1,58 @@
+from datetime import datetime
+
+doacoes = []
+
+def registrar_doacao():
+    print("\n== Registrar Doação ==")
+    nome_doador = input("Nome do doador: ").strip()
+    
+    valor_input = input("Valor (R$): ").strip()
+    try:
+        valor = float(valor_input)
+    except ValueError:
+        print("Valor inválido. Digite um número.")
+        return
+
+    data_input = input("Data (dd/mm/aaaa): ").strip()
+    try:
+        data = datetime.strptime(data_input, "%d/%m/%Y").strftime("%d/%m/%Y")
+    except ValueError:
+        print("Data inválida. Digite no formato dd/mm/aaaa.")
+        return
+
+    forma_pagamento = input("Forma de pagamento (dinheiro/cartao/pix/boleto): ").strip().lower()
+    if forma_pagamento not in ("dinheiro", "cartao", "pix", "boleto"):
+        print("Forma de pagamento inválida. Digite 'dinheiro', 'cartao', 'pix' ou 'boleto'.")
+        return
+
+    doacao = {
+        "nome_doador": nome_doador,
+        "valor": valor,
+        "data": data,
+        "forma_pagamento": forma_pagamento
+    }
+
+    doacoes.append(doacao)
+    print("Doação registrada com sucesso!")
+
+def listar_doacoes():
+    if not doacoes:
+        print("Nenhuma doação registrada.")
+        return
+    print("\n== Doações Registradas ==")
+    for i, d in enumerate(doacoes, 1):
+        print(f"{i}. Doador: {d['nome_doador']} - Valor: R${d['valor']:.2f} - Data: {d['data']} - Forma de pagamento: {d['forma_pagamento']}")
+
+def menu():
+    while True:
+        print("\n1 - Registrar doação")
+        print("2 - Listar doações")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            registrar_doacao()
+        elif opcao == "2":
+            listar_doacoes()
+        else:
+            print("Opção inválida.")
+
+menu()
