@@ -1,0 +1,54 @@
+animais = []
+
+def cadastrar_animal():
+    print("\n== Cadastro de Animal ==")
+    id_animal = input("ID do animal: ").strip()
+    nome = input("Nome: ").strip()
+    idade = input("Idade: ").strip()
+    sexo = input("Sexo (Masculino/Feminino): ").strip().upper()
+    raca = input("Raça: ").strip()
+    temperamento = input("Temperamento: ").strip()
+    historico_saude = input("Histórico de saúde: ").strip()
+    foto = input("Foto (link ou descrição): ").strip()
+    status = input("Status (disponivel/adotado/resgatado): ").strip().lower()
+
+    if status not in ("disponivel", "adotado", "resgatado"):
+        print("Status inválido. Escolha 'disponivel', 'adotado' ou 'resgatado'.")
+        return
+
+    animal = {
+        "id_animal": id_animal,
+        "nome": nome,
+        "idade": idade,
+        "sexo": sexo,
+        "raca": raca,
+        "temperamento": temperamento,
+        "historico_saude": historico_saude,
+        "foto": foto,
+        "status": status
+    }
+
+    animais.append(animal)
+    print("Animal cadastrado com sucesso!")
+
+def listar_animais():
+    if not animais:
+        print("Nenhum animal cadastrado.")
+        return
+    print("\n== Animais Cadastrados ==")
+    for i, a in enumerate(animais, 1):
+        print(f"{i}. ID: {a['id_animal']} - Nome: {a['nome']} - Idade: {a['idade']} - Sexo: {a['sexo']} - Raça: {a['raca']} - Temperamento: {a['temperamento']} - Histórico: {a['historico_saude']} - Foto: {a['foto']} - Status: {a['status']}")
+
+def menu():
+    while True:
+        print("\n1 - Cadastrar animal")
+        print("2 - Listar animais")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            cadastrar_animal()
+        elif opcao == "2":
+            listar_animais()
+        else:
+            print("Opção inválida.")
+
+menu()
