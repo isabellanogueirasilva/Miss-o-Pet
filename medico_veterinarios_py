@@ -1,0 +1,48 @@
+veterinarios = []
+
+def cadastrar_veterinario():
+    print("\n== Cadastro de Veterinário ==")
+    nome = input("Nome: ").strip()
+    email = input("Email: ").strip().lower()
+    telefone = input("Telefone (apenas números, incluindo DDD): ").strip()
+    especialidade = input("Especialidade: ").strip()
+
+    if "@" not in email or email.split("@")[1] not in ("gmail.com", "hotmail.com", "outlook.com", "yahoo.com"):
+        print("Email inválido. Aceitamos apenas gmail, hotmail, outlook ou yahoo.")
+        return
+
+    if not telefone.isdigit() or len(telefone) < 10:
+        print("Telefone inválido. Deve conter apenas números e incluir DDD.")
+        return
+
+    veterinario = {
+        "nome": nome,
+        "email": email,
+        "telefone": telefone,
+        "especialidade": especialidade
+    }
+
+    veterinarios.append(veterinario)
+    print("Veterinário cadastrado com sucesso!")
+
+def listar_veterinarios():
+    if not veterinarios:
+        print("Nenhum veterinário cadastrado.")
+        return
+    print("\n== Veterinários Cadastrados ==")
+    for i, v in enumerate(veterinarios, 1):
+        print(f"{i}. {v['nome']} - {v['email']} - {v['telefone']} - Especialidade: {v['especialidade']}")
+
+def menu():
+    while True:
+        print("\n1 - Cadastrar veterinário")
+        print("2 - Listar veterinários")
+        opcao = input("Escolha: ").strip()
+        if opcao == "1":
+            cadastrar_veterinario()
+        elif opcao == "2":
+            listar_veterinarios()
+        else:
+            print("Opção inválida.")
+
+menu()
